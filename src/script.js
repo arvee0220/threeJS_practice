@@ -17,28 +17,37 @@ const scene = new THREE.Scene();
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 
 const cubeMaterial = [
-    new THREE.MeshMatcapMaterial({ color: "blue", matcap: blueMatcap }), // right
+    new THREE.MeshMatcapMaterial({ color: "orange", matcap: orangeMatcap }), // right
     new THREE.MeshMatcapMaterial({ color: "red", matcap: redMatcap }), // left
-    new THREE.MeshMatcapMaterial({ color: "rgba(228, 223, 223, 0.57)", matcap: whiteMatcap }), // top
-    new THREE.MeshMatcapMaterial({ color: "yellow", matcap: yellowMatcap }), // bottom
-    new THREE.MeshMatcapMaterial({ color: "green", matcap: greenMatcap }), // front
-    new THREE.MeshMatcapMaterial({ color: "orange", matcap: orangeMatcap }) // back
+    new THREE.MeshMatcapMaterial({ color: "green", matcap: greenMatcap }), // top
+    new THREE.MeshMatcapMaterial({ color: "rgba(228, 223, 223, 0.57)", matcap: whiteMatcap }), // bottom
+    new THREE.MeshMatcapMaterial({ color: "blue", matcap: blueMatcap }), // front
+    new THREE.MeshMatcapMaterial({ color: "yellow", matcap: yellowMatcap }) // back
 ];
 
 const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
+
+
 scene.add(cubeMesh);
+
+// cubeMesh.rotation.reorder("YXZ"); // set the rotation order to YXZ
+cubeMesh.rotation.x = THREE.MathUtils.degToRad(90); // orange
+cubeMesh.rotation.y = THREE.MathUtils.degToRad(45); // green
+cubeMesh.rotation.z = THREE.MathUtils.degToRad(0); // blue
 
 // initialize the camera
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 200);
 
 camera.position.z = 5;
-camera.position.x = 5;
-camera.position.y = 3;
+camera.position.x = 2;
+camera.position.y = 2;
 
 // Add axes helper
 const axesHelper = new THREE.AxesHelper(5);
+const meshAxesHelper = new THREE.AxesHelper(1);
 
+cubeMesh.add(meshAxesHelper);
 scene.add(axesHelper);
 
 // initialize the renderer
