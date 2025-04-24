@@ -13,23 +13,62 @@ const orangeMatcap = textureLoader.load("/matcaps/orange.png");
 // initialize the scene
 const scene = new THREE.Scene();
 
-// add objects to the scene
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+// create custom geometry
+const vertices = new Float32Array([
+    1, 0,  1,  // 0
+    -1, 0,  1,  // 1
+    -1, 0, -1,  // 2
 
-const cubeMaterial = [
+    1, 0,  1,  // 0
+    -1, 0, -1,  // 2
+     1, 0, -1,  // 3
+
+     1, 0,  1,  // 0
+    0, 1.5, 0, // 4 (apex)
+    1, 0, -1,  // 3
+
+    1, 0, -1,  // 3
+    0, 1.5, 0, // 4
+    -1, 0, -1,  // 2
+
+    -1, 0, -1,  // 2
+    0, 1.5, 0, // 4
+    -1, 0,  1,  // 1
+
+    -1, 0,  1,  // 1
+    0, 1.5, 0, // 4
+    1, 0,  1,  // 0
+]);
+
+const bufferAttribute = new THREE.BufferAttribute(vertices, 3);
+
+const geometry = new THREE.BufferGeometry();
+
+geometry.setAttribute("position", bufferAttribute);
+
+const material = new THREE.MeshMatcapMaterial({matcap: yellowMatcap, side: THREE.DoubleSide});
+
+const mesh = new THREE.Mesh(geometry, material);
+
+scene.add(mesh);
+
+// add objects to the scene
+// const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+
+/* const cubeMaterial = [
     new THREE.MeshMatcapMaterial({ color: "orange", matcap: orangeMatcap }), // right
     new THREE.MeshMatcapMaterial({ color: "red", matcap: redMatcap }), // left
     new THREE.MeshMatcapMaterial({ color: "green", matcap: greenMatcap }), // top
     new THREE.MeshMatcapMaterial({ color: "rgba(228, 223, 223, 0.57)", matcap: whiteMatcap }), // bottom
     new THREE.MeshMatcapMaterial({ color: "blue", matcap: blueMatcap }), // front
     new THREE.MeshMatcapMaterial({ color: "yellow", matcap: yellowMatcap }) // back
-];
+]; */
 
-const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+// const cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
 
 
-scene.add(cubeMesh);
+// scene.add(cubeMesh);
 
 // cubeMesh.rotation.reorder("YXZ"); // set the rotation order to YXZ
 // cubeMesh.rotation.x = THREE.MathUtils.degToRad(90); // orange
@@ -45,9 +84,9 @@ camera.position.y = 2;
 
 // Add axes helper
 const axesHelper = new THREE.AxesHelper(5);
-const meshAxesHelper = new THREE.AxesHelper(1);
+// const meshAxesHelper = new THREE.AxesHelper(1);
 
-cubeMesh.add(meshAxesHelper);
+// cubeMesh.add(meshAxesHelper);
 scene.add(axesHelper);
 
 // initialize the renderer
@@ -85,11 +124,11 @@ const renderloop = () => {
 
     previousTime = currentTime;
 
-    cubeMesh.rotation.x += THREE.MathUtils.degToRad(1) * delta * 10;
-    cubeMesh.rotation.y += THREE.MathUtils.degToRad(1) * delta * 100;
-    cubeMesh.rotation.z += THREE.MathUtils.degToRad(1) * delta * 10;
+    // cubeMesh.rotation.x += THREE.MathUtils.degToRad(1) * delta * 10;
+    // cubeMesh.rotation.y += THREE.MathUtils.degToRad(1) * delta * 100;
+    // cubeMesh.rotation.z += THREE.MathUtils.degToRad(1) * delta * 10;
 
-    cubeMesh.scale.x = Math.sin(currentTime) + 1;
+    // cubeMesh.scale.x = Math.sin(currentTime) + 1;
 
     console.log(delta);
 
