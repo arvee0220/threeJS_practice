@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { Pane } from "tweakpane";
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -9,6 +10,12 @@ const yellowMatcap = textureLoader.load("/matcaps/yellow.png");
 const whiteMatcap = textureLoader.load("/matcaps/white.png");
 const greenMatcap = textureLoader.load("/matcaps/green.png");
 const orangeMatcap = textureLoader.load("/matcaps/orange.png");
+
+
+const pane = new Pane();
+
+console.log(pane);
+
 
 // initialize the scene
 const scene = new THREE.Scene();
@@ -65,7 +72,7 @@ const vertices = new Float32Array([
 
     // front side left half triangle
     -1, 0, 1,
-    0, -1.5, 0,
+    0, -2, 0,
     0, 0, 1,
 
     // front side right half triangle
@@ -115,6 +122,47 @@ const material = new THREE.MeshMatcapMaterial({matcap: yellowMatcap, side: THREE
 const mesh = new THREE.Mesh(geometry, material);
 
 scene.add(mesh);
+
+// Create a parameters object
+const params = {
+    matcap: 'yellow',
+    scale: 1,
+    wireframe: false
+};
+
+// Bind scale
+pane.addBinding(params, 'scale', { min: 0.1, max: 2, step: 0.1 }).on('change', (ev) => {
+    mesh.scale.setScalar(ev.value);
+});
+
+// Bind wireframe toggle
+pane.addBinding(params, 'wireframe').on('change', (ev) => {
+    mesh.material.wireframe = ev.value;
+});
+
+// Dropdown for matcaps
+pane.addBinding(params, 'matcap', {
+    options: {
+        yellow: 'yellow',
+        blue: 'blue',
+        red: 'red',
+        white: 'white',
+        green: 'green',
+        orange: 'orange'
+    }
+}).on('change', (ev) => {
+    const selected = ev.value;
+    const matcaps = {
+        blue: blueMatcap,
+        red: redMatcap,
+        yellow: yellowMatcap,
+        white: whiteMatcap,
+        green: greenMatcap,
+        orange: orangeMatcap,
+    };
+    mesh.material.matcap = matcaps[selected];
+    mesh.material.needsUpdate = true;
+});
 
 // add objects to the scene
 // const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -184,7 +232,7 @@ let previousTime = 0;
 // render the scene
 const renderloop = () => {
     const currentTime = clock.getElapsedTime();
-    const delta = currentTime - previousTime;
+    // const delta = currentTime - previousTime;
 
     previousTime = currentTime;
 
@@ -193,8 +241,6 @@ const renderloop = () => {
     // cubeMesh.rotation.z += THREE.MathUtils.degToRad(1) * delta * 10;
 
     // cubeMesh.scale.x = Math.sin(currentTime) + 1;
-
-    console.log(delta);
 
     controls.update();
     renderer.render(scene, camera);
