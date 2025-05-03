@@ -15,29 +15,96 @@ const scene = new THREE.Scene();
 
 // create custom geometry
 const vertices = new Float32Array([
-    1, 0,  1,  // 0
-    -1, 0,  1,  // 1
-    -1, 0, -1,  // 2
+    // square base
+    -1, 0, 1,
+    -1, 0, -1,
+    1, 0, -1,
+    1, 0, 1,
+    -1, 0, 1,
+    1, 0, -1,
 
-    1, 0,  1,  // 0
-    -1, 0, -1,  // 2
-     1, 0, -1,  // 3
+    // front side left half triangle
+    -1, 0, 1,
+    0, 1.5, 0,
+    0, 0, 1,
 
-     1, 0,  1,  // 0
-    0, 1.5, 0, // 4 (apex)
-    1, 0, -1,  // 3
+    // front side right half triangle
+    1, 0, 1,
+    0, 1.5, 0,
+    0, 0, 1,
 
-    1, 0, -1,  // 3
-    0, 1.5, 0, // 4
-    -1, 0, -1,  // 2
+    // right side left half triangle
+    1, 0, 1,
+    0, 1.5, 0,
+    1, 0, 0,
 
-    -1, 0, -1,  // 2
-    0, 1.5, 0, // 4
-    -1, 0,  1,  // 1
+    // right side right half triangle
+    1, 0, 0,
+    0, 1.5, 0,
+    1, 0, -1,
 
-    -1, 0,  1,  // 1
-    0, 1.5, 0, // 4
-    1, 0,  1,  // 0
+    // back side left half triangle
+    1, 0, -1,
+    0, 1.5, 0,
+    0, 0, -1,
+
+    // back side right half triangle
+    0, 0, -1,
+    0, 1.5, 0,
+    -1, 0, -1,
+
+    // left side left half triangle
+    -1, 0, -1,
+    -1, 0, 0,
+    0, 1.5, 0,
+
+    // left side right half triangle
+    -1, 0, 1,
+    -1, 0, 0,
+    0, 1.5, 0,
+
+    // front side left half triangle
+    -1, 0, 1,
+    0, -1.5, 0,
+    0, 0, 1,
+
+    // front side right half triangle
+    1, 0, 1,
+    0, -2, 0,
+    0, 0, 1,
+
+    // right side left half triangle
+    1, 0, 1,
+    0, -2, 0,
+    1, 0, 0,
+
+    // right side right half triangle
+    1, 0, 0,
+    0, -2, 0,
+    1, 0, -1,
+
+    // back side left half triangle
+    1, 0, -1,
+    0, -2, 0,
+    0, 0, -1,
+
+    // back side right half triangle
+    0, 0, -1,
+    0, -2, 0,
+    -1, 0, -1,
+
+    // left side left half triangle
+    -1, 0, -1,
+    -1, 0, 0,
+    0, -2, 0,
+
+    // left side right half triangle
+    -1, 0, 1,
+    -1, 0, 0,
+    0, -2, 0,
+
+
+
 ]);
 
 const bufferAttribute = new THREE.BufferAttribute(vertices, 3);
